@@ -3042,36 +3042,35 @@ class ttN_SEED:
 
 
 #---------------------------------------------------------------ttN/image START---------------------------------------------------------------------#
-#class ttN_imageREMBG:
-try:
-    from rembg import remove
-    class ttN_imageREMBG:
-        version = '1.0.0'
-        def __init__(self):
-            pass
-        
-        @classmethod
-        def INPUT_TYPES(s):
-            return {"required": { 
-                    "image": ("IMAGE",),
-                    "image_output": (["Hide", "Preview", "Save", "Hide/Save"],{"default": "Preview"}),
-                    "save_prefix": ("STRING", {"default": "ComfyUI"}),
-                    },
-                    "hidden": {"prompt": "PROMPT", "extra_pnginfo": "EXTRA_PNGINFO", "my_unique_id": "UNIQUE_ID",
-                               "ttNnodeVersion": ttN_imageREMBG.version},
-                }
-            
+class ttN_imageREMBG:
+    version = '1.0.0'
+    def __init__(self):
+        pass
 
-        RETURN_TYPES = ("IMAGE", "MASK")
-        RETURN_NAMES = ("image", "mask")
-        FUNCTION = "remove_background"
-        CATEGORY = "ttN/image"
-        OUTPUT_NODE = True
+    @classmethod
+    def INPUT_TYPES(s):
+        return {"required": {
+                "image": ("IMAGE",),
+                "image_output": (["Hide", "Preview", "Save", "Hide/Save"],{"default": "Preview"}),
+                               "save_prefix": ("STRING", {"default": "ComfyUI"}),
+                },
+                "hidden": {"prompt": "PROMPT", "extra_pnginfo": "EXTRA_PNGINFO", "my_unique_id": "UNIQUE_ID",
+                           "ttNnodeVersion": ttN_imageREMBG.version},
+            }
 
-        def remove_background(self, image, image_output, save_prefix, prompt, extra_pnginfo, my_unique_id):
+
+    RETURN_TYPES = ("IMAGE", "MASK")
+    RETURN_NAMES = ("image", "mask")
+    FUNCTION = "remove_background"
+    CATEGORY = "ttN/image"
+    OUTPUT_NODE = True
+
+    def remove_background(self, image, image_output, save_prefix, prompt, extra_pnginfo, my_unique_id):
+        try:
+            from rembg import remove
             image = remove(ttNsampler.tensor2pil(image))
             tensor = ttNsampler.pil2tensor(image)
-            
+
             #Get alpha mask
             if image.getbands() != ("R", "G", "B", "A"):
                 image = image.convert("RGBA")
@@ -3095,28 +3094,8 @@ try:
             # Output image results to ui and node outputs
             return {"ui": {"images": results},
                     "result": (tensor, mask)}
-except:
-    class ttN_imageREMBG:
-        version = '0.0.0'
-        def __init__(self):
-            pass
-        
-        @classmethod
-        def INPUT_TYPES(s):
-            return {"required": { 
-                        "error": ("STRING",{"default": "RemBG is not installed", "multiline": False, 'readonly': True}),
-                        "link": ("STRING",{"default": "https://github.com/danielgatis/rembg", "multiline": False}),
-                    },
-                    "hidden": {"ttNnodeVersion": ttN_imageREMBG.version},
-                }
-            
-
-        RETURN_TYPES = ("")
-        FUNCTION = "remove_background"
-        CATEGORY = "ttN/image"
-
-        def remove_background(error):
-            return None
+        except ImportError:
+            return {"error": "RemBG is not installed", "link": "https://github.com/danielgatis/rembg"}
 
 class ttN_imageOUPUT:
     version = '1.1.0'
