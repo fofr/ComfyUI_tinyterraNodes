@@ -5,7 +5,7 @@
 **Enjoy my nodes and would like to [help keep me awake](buymeacoffee.com/tinyterra)?**
 
 ![tinyterra_pipeSDXL](workflows/tinyterra_pipeSDXL.png)
-![tinyterra_trueHRFix](workflows/tinyterra_trueHRFix.png) 
+![tinyterra_trueHRFix](workflows/tinyterra_trueHRFix.png)
 ![tinyterra_trueHRFix](workflows/tinyterra_xyPlot.png)
 
 ## Installation
@@ -23,13 +23,13 @@ Navigate to the **_ComfyUI/custom_nodes_** directory with cmd, and run:
 + <details><summary>Adds 'Clear Default Fullscreen Node (ttN)' to the node right-click context menu</summary> Clears the assigned default Fullscreen node
 <break>
 
-+ Slideshow Mode 
++ Slideshow Mode
     + Toggled On - Automatically jumps to New images as they are generated (Black Background) - the UI will auto hide after a set time.
     + Toggled Off - Holds to the current user selected image (Light Background)
 + Fullscreen Overlay
     + Toggles display of a navigable preview of all of the selected nodes images
     + Toggles display of the default comfy menu
-  
+
 + *Shortcuts*
   + 'shift + F11' => _Open ttN-Fullscreen using selected node OR default fullscreen node_
   + 'shift + down arrow' (Node Selected) => _Set selected node as default fullscreen node_
@@ -149,7 +149,7 @@ or %input_name>input_name>widget_name% (for inputting nodes) <br>
 
 <details>
   <summary>pipeLoader v2</summary>
-  
+
 (Includes [ADV_CLIP_emb](https://github.com/BlenderNeko/ComfyUI_ADV_CLIP_emb))
 
 ![pipeLoader](https://github.com/TinyTerra/ComfyUI_tinyterraNodes/assets/115619949/deb74ef1-43a7-4fd5-9cdd-b4487eaee6f0)
@@ -206,7 +206,7 @@ With pipeLoaderSDXL and pipeKSamplerSDXL:
 
 <img src="https://github.com/TinyTerra/ComfyUI_tinyterraNodes/assets/115619949/faa5c807-c96c-4734-99cd-34e6024c32fb"  width="50%">
   </details>
-  
+
 
 
 <details>
@@ -227,7 +227,7 @@ Convert ttN pipe line to basic pipe (to be compatible with [ImpactPack](https://
 
 <details>
   <summary>pipe > Detailer Pipe</summary>
-  
+
 Convert ttN pipe line to detailer pipe (to be compatible with [ImpactPack](https://github.com/ltdrdata/ComfyUI-Impact-Pack)), WITH original pipe throughput
 + _**Inputs -** pipe[model, conditioning, conditioning, samples, vae, clip, image, seed], bbox_detector, sam_model_opt_
 + _**Outputs -** detailer_pipe[model, vae, conditioning, conditioning, bbox_detector, sam_model_opt], pipe_
@@ -235,37 +235,23 @@ Convert ttN pipe line to detailer pipe (to be compatible with [ImpactPack](https
 
 <details>
   <summary>pipe > adv_xyPlot</summary>
-  
+
 pipeKSampler input to generate xy plots using sampler and loader values. (Any values not set by xyPlot will be taken from the corresponding nodes)
 
 ![adv_xyPlot](https://github.com/TinyTerra/ComfyUI_tinyterraNodes/assets/115619949/4443f88e-5e95-413b-9eb1-caf643b19ba1)
    </details>
 
 ## ttN/image
-  
+
 <details>
   <summary>imageOutput</summary>
-  
+
 Preview or Save an image with one node, with image throughput.
 + _**Inputs -** image, image output[Hide, Preview, Save, Hide/Save], output path, save prefix, number padding[None, 2-9], file type[PNG, JPG, JPEG, BMP, TIFF, TIF] overwrite existing[True, False], embed workflow[True, False]_
 + _**Outputs -** image_
-  
+
 </details>
-  
-<details>
-  <summary>imageRemBG</summary>
-  
-(Using [RemBG](https://github.com/danielgatis/rembg))
 
-Background Removal node with optional image preview & save.
-+ _**Inputs -** image, image output[Disabled, Preview, Save], save prefix_
-+ _**Outputs -** image, mask_
-
-Example of a photobashing workflow using pipeNodes, imageRemBG, imageOutput and nodes from [ADV_CLIP_emb](https://github.com/BlenderNeko/ComfyUI_ADV_CLIP_emb) and [ImpactPack](https://github.com/ltdrdata/ComfyUI-Impact-Pack/tree/Main):
-![photobash](workflows/tinyterra_imagebash.png)
-
- </details>
-  
 <details>
   <summary>hiresFix</summary>
 
@@ -289,7 +275,7 @@ Text input, to display text inside the node, with optional print to console.
 + _**inputs -** text, print_to_console_
 + _**Outputs -** text (STRING)_
    </details>
-  
+
 <details>
   <summary>textConcat</summary>
 
@@ -332,19 +318,19 @@ float loader and converter
 
 <details>
   <summary>int</summary>
-  
+
 int loader and converter
 + _**inputs -** int (INT)_
 + _**Outputs -** int, float, text (INT, FLOAT, STRING)_
    </details>
-  
+
  </details>
 
 ## ttN/legacy
 
 <details>
   <summary>pipeLoader v1</summary>
-  
+
 (Modified from [Efficiency Nodes](https://github.com/LucianoCirino/efficiency-nodes-comfyui) and [ADV_CLIP_emb](https://github.com/BlenderNeko/ComfyUI_ADV_CLIP_emb))
 
 Combination of Efficiency Loader and Advanced CLIP Text Encode with an additional pipe output
@@ -354,7 +340,7 @@ Combination of Efficiency Loader and Advanced CLIP Text Encode with an additiona
 
 <details>
   <summary>pipeKSampler v1</summary>
-  
+
 (Modified from [Efficiency Nodes](https://github.com/LucianoCirino/efficiency-nodes-comfyui) and [QOLS_Omar92](https://github.com/omar92/ComfyUI-QualityOfLifeSuit_Omar92))
 
 Combination of Efficiency Loader and Advanced CLIP Text Encode with an additional pipe output
@@ -402,7 +388,7 @@ With pipeLoaderSDXL and pipeKSamplerSDXL:
 
 <img src="https://github.com/TinyTerra/ComfyUI_tinyterraNodes/assets/115619949/faa5c807-c96c-4734-99cd-34e6024c32fb"  width="50%">
   </details>
-  
+
 <details>
   <summary>pipeIN</summary>
 
@@ -421,7 +407,7 @@ Decode single Pipe line into the 8 original outputs, AND a Pipe throughput.
 
 <details>
   <summary>pipe > xyPlot</summary>
-  
+
 pipeKSampler input to generate xy plots using sampler and loader values. (Any values not set by xyPlot will be taken from the corresponding pipeKSampler or pipeLoader)
 + _**Inputs -** grid_spacing, latent_id, flip_xy, x_axis, x_values, y_axis, y_values_
 + _**Outputs -** xyPlot_

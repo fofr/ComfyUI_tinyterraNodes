@@ -3042,61 +3042,6 @@ class ttN_SEED:
 
 
 #---------------------------------------------------------------ttN/image START---------------------------------------------------------------------#
-class ttN_imageREMBG:
-    version = '1.0.0'
-    def __init__(self):
-        pass
-
-    @classmethod
-    def INPUT_TYPES(s):
-        return {"required": {
-                "image": ("IMAGE",),
-                "image_output": (["Hide", "Preview", "Save", "Hide/Save"],{"default": "Preview"}),
-                               "save_prefix": ("STRING", {"default": "ComfyUI"}),
-                },
-                "hidden": {"prompt": "PROMPT", "extra_pnginfo": "EXTRA_PNGINFO", "my_unique_id": "UNIQUE_ID",
-                           "ttNnodeVersion": ttN_imageREMBG.version},
-            }
-
-
-    RETURN_TYPES = ("IMAGE", "MASK")
-    RETURN_NAMES = ("image", "mask")
-    FUNCTION = "remove_background"
-    CATEGORY = "ttN/image"
-    OUTPUT_NODE = True
-
-    def remove_background(self, image, image_output, save_prefix, prompt, extra_pnginfo, my_unique_id):
-        try:
-            from rembg import remove
-            image = remove(ttNsampler.tensor2pil(image))
-            tensor = ttNsampler.pil2tensor(image)
-
-            #Get alpha mask
-            if image.getbands() != ("R", "G", "B", "A"):
-                image = image.convert("RGBA")
-            mask = None
-            if "A" in image.getbands():
-                mask = np.array(image.getchannel("A")).astype(np.float32) / 255.0
-                mask = torch.from_numpy(mask)
-                mask = 1. - mask
-            else:
-                mask = torch.zeros((64,64), dtype=torch.float32, device=sampler.device)
-
-            if image_output == "Disabled":
-                results = []
-            else:
-                ttN_save = ttNsave(my_unique_id, prompt, extra_pnginfo)
-                results = ttN_save.images(tensor, save_prefix, image_output)
-
-            if image_output in ("Hide", "Hide/Save"):
-                return (tensor, mask)
-
-            # Output image results to ui and node outputs
-            return {"ui": {"images": results},
-                    "result": (tensor, mask)}
-        except ImportError:
-            return {"error": "RemBG is not installed", "link": "https://github.com/danielgatis/rembg"}
-
 class ttN_imageOUPUT:
     version = '1.1.0'
     def __init__(self):
@@ -4634,7 +4579,6 @@ TTN_VERSIONS = {
     "text3BOX_3WAYconcat": ttN_text3BOX_3WAYconcat.version,
     "text7BOX_concat": ttN_text7BOX_concat.version,
     "imageOutput": ttN_imageOUPUT.version,
-    "imageREMBG": ttN_imageREMBG.version,
     "hiresfixScale": ttN_modelScale.version,
     "int": ttN_INT.version,
     "float": ttN_FLOAT.version,
@@ -4668,7 +4612,6 @@ NODE_CLASS_MAPPINGS = {
 
     #ttN/image
     "ttN imageOutput": ttN_imageOUPUT,
-    "ttN imageREMBG": ttN_imageREMBG,
     "ttN hiresfixScale": ttN_modelScale,
 
     #ttN/util
@@ -4712,7 +4655,6 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "ttN text3BOX_3WAYconcat": "3x TXT Loader MultiConcat",
 
     #ttN/image
-    "ttN imageREMBG": "imageRemBG",
     "ttN imageOutput": "imageOutput",
     "ttN hiresfixScale": "hiresfixScale",
 

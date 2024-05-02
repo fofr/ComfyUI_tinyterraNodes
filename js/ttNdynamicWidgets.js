@@ -13,7 +13,7 @@ function updateNodeHeight(node) {
 function toggleWidget(node, widget, show = false, suffix = "") {
 	if (!widget || doesInputWithNameExist(node, widget.name)) return;
 	if (!origProps[widget.name]) {
-		origProps[widget.name] = { origType: widget.type, origComputeSize: widget.computeSize, origComputedHeight: widget.computedHeight };	
+		origProps[widget.name] = { origType: widget.type, origComputeSize: widget.computeSize, origComputedHeight: widget.computedHeight };
 	}
 	const origSize = node.size;
 
@@ -21,7 +21,7 @@ function toggleWidget(node, widget, show = false, suffix = "") {
 	widget.computeSize = show ? origProps[widget.name].origComputeSize : () => [0, -4];
 	widget.computedHeight = show ? origProps[widget.name].origComputedHeight : 0;
 
-	widget.linkedWidgets?.forEach(w => toggleWidget(node, w, ":" + widget.name, show));	
+	widget.linkedWidgets?.forEach(w => toggleWidget(node, w, ":" + widget.name, show));
 
 	const height = show ? Math.max(node.computeSize()[1], origSize[1]) : node.size[1];
 	node.setSize([node.size[0], height]);
@@ -50,7 +50,7 @@ function widgetLogic(node, widget) {
                 toggleWidget(node, findWidgetByName(node, 'lora1_clip_strength'), true)
             }
             break;
-        
+
         case 'lora2_name':
             if (widget.value === "None") {
                 toggleWidget(node, findWidgetByName(node, 'lora2_model_strength'))
@@ -120,7 +120,7 @@ function widgetLogic(node, widget) {
 			} else {
 				toggleWidget(node, findWidgetByName(node, 'rescale_method'), true)
 				toggleWidget(node, findWidgetByName(node, 'rescale'), true)
-				
+
 				let rescale_value = findWidgetByName(node, 'rescale').value
 
 				if (rescale_value === 'by percentage') {
@@ -319,7 +319,7 @@ function widgetLogic(node, widget) {
 				toggleWidget(node, findWidgetByName(node, 'empty_latent_height'), true)
 			}
 			break;
-        
+
         case 'conditioning_aspect':
             if (widget.value !== 'width x height [custom]') {
                 toggleWidget(node, findWidgetByName(node, 'conditioning_width'))
@@ -354,7 +354,7 @@ function widgetLogic(node, widget) {
                 toggleWidget(node, findWidgetByName(node, 'refiner_denoise'), true)
             }
             break;
-        
+
         case 'sampler_state':
             if (widget.value == 'Hold') {
                 findWidgetByName(node, 'control_after_generate').value = 'fixed'
@@ -363,10 +363,10 @@ function widgetLogic(node, widget) {
 	}
 }
 
-const getSetWidgets = ['rescale_after_model', 'rescale', 'image_output', 
-						'lora_name', 'lora1_name', 'lora2_name', 'lora3_name', 
-						'refiner_lora1_name', 'refiner_lora2_name', 'refiner_steps', 'upscale_method', 
-						'image_output', 'add_noise', 
+const getSetWidgets = ['rescale_after_model', 'rescale', 'image_output',
+						'lora_name', 'lora1_name', 'lora2_name', 'lora3_name',
+						'refiner_lora1_name', 'refiner_lora2_name', 'refiner_steps', 'upscale_method',
+						'image_output', 'add_noise',
 						'ckpt_B_name', 'ckpt_C_name', 'save_model', 'refiner_ckpt_name',
 						'num_loras', 'mode', 'toggle', 'empty_latent_aspect', 'conditioning_aspect', 'target_aspect', 'sampler_state']
 
@@ -395,7 +395,7 @@ function getSetters(node) {
 
 app.registerExtension({
 	name: "comfy.ttN.dynamicWidgets",
-	
+
 	nodeCreated(node) {
 		const nodeTitle = node.getTitle();
 		const titles = [
@@ -410,14 +410,13 @@ app.registerExtension({
             "pipeKSamplerAdvanced v1 (Legacy)",
 			"pipeKSamplerSDXL",
 			"pipeKSamplerSDXL v1 (Legacy)",
-			"imageRemBG",
 			"imageOutput",
 			"multiModelMerge",
 			"pipeLoraStack",
 			"pipeEncodeConcat",
             "ttN KSampler",
 		];
-	
+
 		if (titles.includes(nodeTitle)) {
 			getSetters(node);
 		}
